@@ -1,10 +1,13 @@
 package com.taeksukim.android.soundplayer;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+
+
 
 
 import android.support.v4.view.ViewPager;
@@ -21,14 +24,26 @@ import android.widget.Toast;
 
 import com.taeksukim.android.soundplayer.util.fragment.PagerAdapter;
 
+import static com.taeksukim.android.soundplayer.ListFragment.TYPE_ARTIST;
+import static com.taeksukim.android.soundplayer.ListFragment.TYPE_SONG;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final int REQ_PERMISSION = 100; // 권한요청코드
+
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkPermission();
+
+    }
+
+    private void init(){
         //화면의 툴바 가져오기
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //타이틀 색깔 변경.
@@ -61,18 +76,14 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
 
-//        탭 메뉴가 4개 보다 작으면 스크롤 가능, 그게 아닌 경우 Fix
-//        int tabCount = 4;
-//        if (tabCount<4){
-//            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-//        }else{
-//            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-//        }
+
         // 탭 생성 및 타이틀 입력
-        tabLayout.addTab( tabLayout.newTab().setText(getResources().getString(R.string.menu_title)));
-        tabLayout.addTab( tabLayout.newTab().setText(getResources().getString(R.string.menu_artist)));
-        tabLayout.addTab( tabLayout.newTab().setText(getResources().getString(R.string.menu_album)));
-        tabLayout.addTab( tabLayout.newTab().setText(getResources().getString(R.string.menu_genre)));
+        tabLayout.addTab( tabLayout.newTab().setText(
+                getResources().getString( R.string.menu_title )) // "Title" -> values/strings.xml > 값을 세팅
+        );
+        tabLayout.addTab( tabLayout.newTab().setText( getResources().getString(R.string.menu_artist)) );
+        tabLayout.addTab( tabLayout.newTab().setText( getResources().getString(R.string.menu_album)) );
+        tabLayout.addTab( tabLayout.newTab().setText( getResources().getString(R.string.menu_genre)) );
 
 
 
@@ -85,10 +96,8 @@ public class MainActivity extends AppCompatActivity
         // 프래그먼트 초기화
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 
-
-
-        adapter.add(new OneFragment());
-        adapter.add(new TwoFragment());
+        adapter.add(ListFragment.newInstance(1, TYPE_SONG));
+        adapter.add(ListFragment.newInstance(3, TYPE_SONG));
         adapter.add(new ThreeFragment());
         adapter.add(new FourFragment());
 
@@ -158,22 +167,47 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.menu_title) {
+            viewPager.setCurrentItem(0);
+        } else if (id == R.id.menu_artist) {
+            viewPager.setCurrentItem(1);
+        } else if (id == R.id.menu_album) {
+            viewPager.setCurrentItem(2);
+        } else if (id == R.id.menu_genre) {
+            viewPager.setCurrentItem(3);
+        } else if (id == R.id.nav_mylist) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_search) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // 권한관리
+    private void checkPermission() {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            if( PermissionControl.checkPermission(this, REQ_PERMISSION) ){
+                init();
+            }
+        }else{
+            init();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQ_PERMISSION){
+            if( PermissionControl.onCheckResult(grantResults)){
+                init();
+            }else{
+                Toast.makeText(this, "권한을 허용하지 않으시면 프로그램을 실행할 수 없습니다.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

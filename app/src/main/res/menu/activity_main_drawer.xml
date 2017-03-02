@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/menu_title"
             android:icon="@drawable/ic_menu_camera"
             android:title="Title" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/menu_artist"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Artist" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/menu_album"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="ALbum" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/menu_genre"
             android:icon="@drawable/ic_menu_manage"
             android:title="genre" />
     </group>
@@ -23,13 +23,17 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Mylist" />
+                android:id="@+id/nav_mylist"
+                android:icon="@android:drawable/ic_menu_sort_by_size"
+                android:title="@string/action_mylist" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Search" />
+                android:id="@+id/nav_search"
+                android:icon="@android:drawable/ic_menu_search"
+                android:title="@string/action_search" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="@string/action_settings" />
         </menu>
     </item>
 

@@ -6,17 +6,20 @@ import android.net.Uri;
  * Created by TaeksuKim on 2017. 2. 28..
  */
 
-public class Sound {
+public class Sound extends Common{
 
     //Sound info.
     public int id;
+    public Uri music_uri;
     public String title;
+    public int artist_id;
     public String artist;
+    public String artist_key;
     public int album_id;
-    public int genre_id;
     public Uri album_image_uri;
+    public int genre_id;
     public int duration;
-    public boolean is_music;
+    public String is_music;
     public String composer;
     public String content_type;
     public String year;
@@ -26,4 +29,23 @@ public class Sound {
     public boolean favor;
 
 
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getArtist() {
+        return artist;
+    }
+
+    @Override
+    public String getDuration() {
+        return duration+"";
+    }
+
+    @Override
+    public Uri getImageUri() {
+        return album_image_uri;
+    }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TaeksuKim on 2017. 2. 27..
+ * Created by pc on 2/27/2017.
  */
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -17,7 +17,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
-       fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
     }
 
     public void add(Fragment fragment){
@@ -26,8 +26,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
-     return fragments.get(position);
+        return fragments.get(position);
     }
 
     @Override
@@ -35,4 +34,3 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         return fragments.size();
     }
 }
-
