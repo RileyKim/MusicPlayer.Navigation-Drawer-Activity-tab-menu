@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +37,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             case ListFragment.TYPE_ALBUM:
             case ListFragment.TYPE_GENRE:
             case ListFragment.TYPE_ARTIST:
-                item_layout_id = R.layout.list_fragment_item;
+                item_layout_id = R.layout.list_fragment_item_album;
                 break;
         }
 
@@ -68,7 +68,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         switch(flag){
             case ListFragment.TYPE_SONG:
-                holder.textDuration.setText(common.getDuration());
+                holder.textDuration.setText(common.getDurationText());
                 break;
             case ListFragment.TYPE_ALBUM:
             case ListFragment.TYPE_GENRE:
@@ -95,8 +95,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
 //
-            box = (ConstraintLayout) view.findViewById(R.id.list_item2);
-            imageView = (ImageView) view.findViewById(R.id.imageView2);
+            box = (ConstraintLayout) view.findViewById(R.id.list_item);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
             textTitle = (TextView) view.findViewById(R.id.textTitle);
             textArtist = (TextView) view.findViewById(R.id.textArtist);
             switch(flag){
@@ -106,7 +106,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(context, PlayerActivity.class);
-                            intent.putExtra("position", position);
+                            intent.putExtra(ListFragment.ARG_POSITION, position);
+                            intent.putExtra(ListFragment.ARG_LIST_TYPE, flag);
+                            context.startActivity(intent);
+                        }
+                    });
+                    break;
+                case ListFragment.TYPE_ARTIST:
+                    box.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, PlayerActivity.class);
+                            intent.putExtra(ListFragment.ARG_POSITION, position);
+                            intent.putExtra(ListFragment.ARG_LIST_TYPE, flag);
                             context.startActivity(intent);
                         }
                     });

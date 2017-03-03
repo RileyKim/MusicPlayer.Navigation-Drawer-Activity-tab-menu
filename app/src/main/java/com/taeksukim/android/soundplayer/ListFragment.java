@@ -16,8 +16,8 @@ import java.util.List;
 public class ListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_LIST_TYPE = "list-type";
-
+    public static final String ARG_LIST_TYPE = "list-type";
+    public static final String ARG_POSITION = "position";
     public static final String TYPE_SONG = "SONG";
     public static final String TYPE_ARTIST = "ARTIST";
     public static final String TYPE_ALBUM = "ALBUM";
@@ -80,6 +80,8 @@ public class ListFragment extends Fragment {
 //            } else {
             if (mColumnCount > 1) {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            } else {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
             }
             Log.w("dataSize", String.valueOf(datas.size()));
             recyclerView.setAdapter(new ListAdapter(context,datas,mListType));

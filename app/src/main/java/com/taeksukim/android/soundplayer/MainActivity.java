@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.taeksukim.android.soundplayer.util.fragment.PagerAdapter;
 
+
 import static com.taeksukim.android.soundplayer.ListFragment.TYPE_ARTIST;
 import static com.taeksukim.android.soundplayer.ListFragment.TYPE_SONG;
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
 
         adapter.add(ListFragment.newInstance(1, TYPE_SONG));
-        adapter.add(ListFragment.newInstance(3, TYPE_SONG));
+        adapter.add(ListFragment.newInstance(3, TYPE_ARTIST));
         adapter.add(new ThreeFragment());
         adapter.add(new FourFragment());
 

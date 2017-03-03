@@ -12,6 +12,8 @@ public class Artist extends Common{
     public int id;
     public String artist;
     public String artist_key;
+    public int album_id;
+    public Uri album_image_uri;
     public int number_of_tracks;
     public int number_of_albums;
     public List<Sound> sounds;
@@ -23,16 +25,21 @@ public class Artist extends Common{
 
     @Override
     public String getArtist() {
-        return null;
+        return "Tracks : " + number_of_tracks;
     }
 
     @Override
-    public String getDuration() {
-        return "";
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public String getDurationText() {
+        return null;
     }
 
     @Override
     public Uri getImageUri() {
-        return null;
+        return album_image_uri;
     }
 }

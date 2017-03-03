@@ -2,6 +2,8 @@ package com.taeksukim.android.soundplayer.domain;
 
 import android.net.Uri;
 
+import com.taeksukim.android.soundplayer.util.TimeUtil;
+
 /**
  * Created by TaeksuKim on 2017. 2. 28..
  */
@@ -40,8 +42,14 @@ public class Sound extends Common{
     }
 
     @Override
-    public String getDuration() {
-        return duration+"";
+    public int getDuration() {
+
+        return duration;
+    }
+
+    @Override
+    public String getDurationText() {
+        return TimeUtil.covertMiliToTime(getDuration());
     }
 
     @Override

@@ -33,7 +33,7 @@ public class DataLoader {
 
 
     public static List<Artist> getArtist(Context context) {
-        if (soundDatas == null || soundDatas.size() == 0) {
+        if (artistDatas == null || artistDatas.size() == 0) {
             loadArtist(context);
         }
         return artistDatas;
@@ -124,6 +124,9 @@ public class DataLoader {
                 artist.number_of_albums = getInt(cursor, PROJ[3]);
                 artist.number_of_tracks = getInt(cursor, PROJ[4]);
 
+                artist.album_id = getAlbumIdByArtistId(artist.id);
+                artist.album_image_uri = getAlbumUriByArtistId(artist.id);
+
                 artistDatas.add(artist);
             }
             // 처리 후 커서를 닫아준다
@@ -131,25 +134,49 @@ public class DataLoader {
         }
     }
 
-    private static String getString(Cursor cursor, String columnName) {
+    public static int getAlbumIdByArtistId(int artist_id){
+        for(Sound sound : soundDatas){
+            if(sound.artist_id == artist_id){
+                return sound.album_id;
+            }
+        }
+        return -1;
+    }
+
+    public static Uri getAlbumUriByArtistId(int artist_id){
+        for(Sound sound : soundDatas){
+            if(sound.artist_id == artist_id){
+                return sound.album_image_uri;
+            }
+        }
+        return null;
+    }
+
+
+    private static String getGenre(){
+        // MediaStore.Audio.Genres.getContentUriForAudioId();
+        return "";
+    }
+
+
+    private static String getString(Cursor cursor, String columnName){
         int idx = cursor.getColumnIndex(columnName);
         return cursor.getString(idx);
     }
 
-    private static Integer getInt(Cursor cursor, String columnName) {
+    private static int getInt(Cursor cursor, String columnName){
         int idx = cursor.getColumnIndex(columnName);
         return cursor.getInt(idx);
     }
 
     // 음악 id로 uri 를 가져오는 함수
-    private static Uri getMusicUri(int music_id) {
+    private static Uri getMusicUri(int music_id){
         Uri content_uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        return Uri.withAppendedPath(content_uri, music_id + "");
+        return Uri.withAppendedPath(content_uri, music_id+"");
     }
 
-    //앨범 Uri 생성
-    private static Uri getAlbumImageSimple(int album_id) {
+    // 앨범 Uri 생성
+    private static Uri getAlbumImageSimple(int album_id){
         return Uri.parse("content://media/external/audio/albumart/" + album_id);
     }
 }
-

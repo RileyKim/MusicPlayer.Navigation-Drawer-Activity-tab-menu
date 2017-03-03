@@ -21,12 +21,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PlayerActivity" />
+        <activity android:name=".PlayerActivity"
+            android:theme = "@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".SoundService"
             android:enabled="true"
             android:exported="true"></service>
+
     </application>
 
 </manifest>

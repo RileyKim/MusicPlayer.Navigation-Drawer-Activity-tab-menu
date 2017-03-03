@@ -10,7 +10,8 @@ public abstract class Common {
 
     public abstract String getTitle();
     public abstract String getArtist();
-    public abstract String getDuration();
+    public abstract int getDuration();
+    public abstract String getDurationText();
     public abstract Uri getImageUri();
 
 
